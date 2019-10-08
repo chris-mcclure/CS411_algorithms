@@ -1,0 +1,17 @@
+int main(){
+	int n;
+	cout << "What is N? ";
+	cin >> n;
+	for(inti =0; i < 1<<n;++i){
+		for(int j=0;j<n;++j)
+			if(i&1<<j)
+				cout << j;
+		cout << endl;
+	}
+	
+	return 0;
+}
+
+all subsets of n things
+	find x = all subsets of n-1 things
+	return x+ all {n,i} for i in x;
