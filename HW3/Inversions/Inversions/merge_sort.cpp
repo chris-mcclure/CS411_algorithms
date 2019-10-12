@@ -26,29 +26,29 @@ using std::remove_reference;
 // Merge two halves of a sequence, each sorted, into a single sorted
 // sequence in the same location. Merge is done in a stable manner.
 // Requirements on Types:
-//     FDIter is a forward iterator type.
-//     The value type of FDIter has default ctor, dctor, copy=,
+//     RAIter is a forward iterator type.
+//     The value type of RAIter has default ctor, dctor, copy=,
 //      operator<.
-//     operator< is a total order on the value type of FDIter.
+//     operator< is a total order on the value type of RAIter.
 // Pre:
 //     [first, middle) and [middle, last) are valid ranges, each sorted
 //      by <.
 // Post:
 //     [first, last) contains the same items as it did initially, but
 //      now sorted by < (in a stable manner).
-template <typename FDIter>
-void stableMerge(FDIter first, FDIter middle, FDIter last)
+template <typename RAIter>
+void stableMerge(RAIter first, RAIter middle, RAIter last)
 {
     // ** C++03:
-    using Value = typename iterator_traits<FDIter>::value_type;
+    using Value = typename std::iterator_traits<RAIter>::value_type;
     // ** C++11:
 //    using Value = typename remove_reference<decltype(*first)>::type;
     // ** Is this really better?
 
     vector<Value> buffer(distance(first, last));
                                 // Buffer for temporary copy of data
-    FDIter in1 = first;         // Read location in 1st half
-    FDIter in2 = middle;        // Read location in 2nd half
+    RAIter in1 = first;         // Read location in 1st half
+    RAIter in2 = middle;        // Read location in 2nd half
     auto out = buffer.begin();  // Write location in buffer
     // ** auto! That *is* better than vector<Value>::iterator
 
@@ -76,17 +76,17 @@ void stableMerge(FDIter first, FDIter middle, FDIter last)
 // Sorts a sequence, using Merge Sort.
 // Recursive.
 // Requirements on Types:
-//     FDIter is a forward iterator type.
-//     The value type of FDIter has default ctor, dctor, copy=,
+//     RAIter is a forward iterator type.
+//     The value type of RAIter has default ctor, dctor, copy=,
 //      operator<.
-//     operator< is a total order on the value type of FDIter.
+//     operator< is a total order on the value type of RAIter.
 // Pre:
 //     [first, last) is a valid range.
 // Post:
 //     [first, last) contains the same items as it did initially,
 //      but now sorted by < (in a stable manner).
-template <typename FDIter>
-void mergeSort(FDIter first, FDIter last)
+template <typename RAIter>
+void mergeSort(RAIter first, RAIter last)
 {
     // Compute size of sequence
     size_t size = distance(first, last);
@@ -96,7 +96,7 @@ void mergeSort(FDIter first, FDIter last)
         return;
 
     // RECURSIVE CASE
-    FDIter middle = first;
+    RAIter middle = first;
     advance(middle, size/2);  // middle is iterator to middle of range
 
     // Recursively sort the two lists
