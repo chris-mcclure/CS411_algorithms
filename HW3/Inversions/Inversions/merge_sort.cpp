@@ -107,35 +107,3 @@ void mergeSort(RAIter first, RAIter last)
     stableMerge(first, middle, last);
 }
 
-
-// Main program
-// Demonstrates use of function mergeSort.
-int main()
-{
-    // Set up data to sort
-    vector<int> v { 5, 3, 2, 8, 5, 9, 10, 4, 6, 1, -4 };
-
-    // Print unaltered data
-    cout << "Before:" << endl;
-    for (const auto & val : v)
-        cout << val << " ";
-    cout << endl;
-    cout << endl;
-
-    // Do a sort
-    mergeSort(v.begin(), v.end());
-
-    // Print results
-    cout << "After:" << endl;
-    for (const auto & val : v)
-        cout << val << " ";
-    cout << endl;
-    cout << endl;
-
-    // Wait for user
-    cout << "Press ENTER to quit ";
-    while (cin.get() != '\n') ;
-
-    return 0;
-}
-

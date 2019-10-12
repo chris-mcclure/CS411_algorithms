@@ -9,7 +9,7 @@
 #ifndef inversions_h
 #define inversions_h
 
-#include "merge_sort.cpp'"
+#include "merge_sort.cpp"
 #include <iterator>
 using std::distance;
 #include <algorithm>
