@@ -5,10 +5,6 @@
 // For CS 411/611 Fall 2015
 // Merge Sort using Iterators
 
-#include <iostream>
-using std::cout;
-using std::endl;
-using std::cin;
 #include <vector>
 using std::vector;
 #include <cstddef>
@@ -17,16 +13,16 @@ using std::size_t;
 using std::copy;
 #include <iterator>
 using std::distance;
-using std::advance;
-#include <type_traits>
-using std::remove_reference;
+//#include <type_traits>
+//using std::remove_reference;
 
 
 // stableMerge
 // Merge two halves of a sequence, each sorted, into a single sorted
 // sequence in the same location. Merge is done in a stable manner.
+// Returns the amount of items remaining in the first half (inversions).
 // Requirements on Types:
-//     RAIter is a forward iterator type.
+//     RAIter is a random access iterator type.
 //     The value type of RAIter has default ctor, dctor, copy=,
 //      operator<.
 //     operator< is a total order on the value type of RAIter.
@@ -39,7 +35,7 @@ using std::remove_reference;
 template <typename RAIter>
 size_t stableMerge(RAIter first, RAIter middle, RAIter last)
 {
-    size_t inversions = 0;
+    size_t numInversions = 0;
     // ** C++03:
     using Value = typename std::iterator_traits<RAIter>::value_type;
     // ** C++11:
@@ -58,7 +54,7 @@ size_t stableMerge(RAIter first, RAIter middle, RAIter last)
     {
         if (*in2 < *in1){  // Must do comparison this way, to be stable.
             *out++ = *in2++;
-            inversions += distance(in1, middle); // Number of inversions is equal to the amount of values still in the first half of the array.
+            numInversions += distance(in1, middle); // Number of inversions is equal to the amount of values still in the first half of the array.
         }
         else
             *out++ = *in1++;
@@ -72,15 +68,14 @@ size_t stableMerge(RAIter first, RAIter middle, RAIter last)
 
     // Copy buffer contents back to original sequence location.
     copy(buffer.begin(), buffer.end(), first);
-    return inversions;
+    return numInversions;
 }
 
-
 // mergeSort
-// Sorts a sequence, using Merge Sort.
+// Sorts a sequence, using Merge Sort. Returns the value returned by stableMerge.
 // Recursive.
 // Requirements on Types:
-//     RAIter is a forward iterator type.
+//     RAIter is a random access iterator type.
 //     The value type of RAIter has default ctor, dctor, copy=,
 //      operator<.
 //     operator< is a total order on the value type of RAIter.
@@ -98,11 +93,12 @@ size_t mergeSort(RAIter first, RAIter last)
     if (size <= 1) return 0;
     // Find iterator pointing to the middle of the array.
     RAIter middle = first + ((last - first) / 2);
-    // Recursively sort the two lists
-    size_t m = mergeSort(first, middle);
-    size_t n = mergeSort(middle, last);
-    // And merge them
-    size_t total = stableMerge(first, middle, last) + m + n;
-    return total;
+    // Recursively sort and find the number of inversions in the first and second halves
+    // of the list.
+    size_t firstHalfInversions = mergeSort(first, middle);
+    size_t secondHalfInversions = mergeSort(middle, last);
+    // merge them and return the total amount of inversions.
+    return (stableMerge(first, middle, last) + firstHalfInversions + secondHalfInversions);
 }
+
 

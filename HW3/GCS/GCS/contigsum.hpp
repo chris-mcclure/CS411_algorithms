@@ -62,7 +62,6 @@ gcsValues recurse(RAIter first, RAIter last, size_t size){
     val1 = recurse(first, mid, size);
     size = distance(mid+1, last)+1;
     gcsValues val2 = recurse(mid+1, last, size);
-    
     gcsValues val3 = {
                     maximum(val1.gcsOfSeq, val2.gcsOfSeq, val1.gcsWithLastVal + val2.gcsWithFirstVal),
                     max(val1.gcsWithFirstVal, val1.sumOfSeq + val2.gcsWithFirstVal),
@@ -75,9 +74,8 @@ gcsValues recurse(RAIter first, RAIter last, size_t size){
 template <typename RAIter>
 int contigSum(RAIter first, RAIter last){
     int sum = 0;
-    if(first == last){
-        return sum;
-    }
+    if(first == last) return sum;
+
     size_t size = distance(first, last);
     gcsValues v = recurse(first, last-1, size);
     sum = v.gcsOfSeq;
