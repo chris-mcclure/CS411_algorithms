@@ -54,7 +54,7 @@ size_t stableMerge(RAIter first, RAIter middle, RAIter last)
     {
         if (*in2 < *in1){  // Must do comparison this way, to be stable.
             *out++ = *in2++;
-            numInversions += distance(in1, middle); // Number of inversions is equal to the amount of values still in the first half of the array.
+            numInversions += (middle - in1); // Number of inversions is equal to the amount of values still in the first half of the array.
         }
         else
             *out++ = *in1++;
