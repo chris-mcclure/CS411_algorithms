@@ -37,12 +37,13 @@ using std::remove_reference;
 //     [first, last) contains the same items as it did initially, but
 //      now sorted by < (in a stable manner).
 template <typename RAIter>
-void stableMerge(RAIter first, RAIter middle, RAIter last)
+size_t stableMerge(RAIter first, RAIter middle, RAIter last)
 {
+    size_t inversions = 0;
     // ** C++03:
     using Value = typename std::iterator_traits<RAIter>::value_type;
     // ** C++11:
-//    using Value = typename remove_reference<decltype(*first)>::type;
+    // using Value = typename remove_reference<decltype(*first)>::type;
     // ** Is this really better?
 
     vector<Value> buffer(distance(first, last));
@@ -55,8 +56,10 @@ void stableMerge(RAIter first, RAIter middle, RAIter last)
     // Merge two sorted lists into a single list in buff.
     while (in1 != middle && in2 != last)
     {
-        if (*in2 < *in1)  // Must do comparison this way, to be stable.
+        if (*in2 < *in1){  // Must do comparison this way, to be stable.
             *out++ = *in2++;
+            inversions += distance(in1, middle); // Number of inversions is equal to the amount of values still in the first half of the array.
+        }
         else
             *out++ = *in1++;
     }
@@ -69,6 +72,7 @@ void stableMerge(RAIter first, RAIter middle, RAIter last)
 
     // Copy buffer contents back to original sequence location.
     copy(buffer.begin(), buffer.end(), first);
+    return inversions;
 }
 
 
@@ -86,24 +90,19 @@ void stableMerge(RAIter first, RAIter middle, RAIter last)
 //     [first, last) contains the same items as it did initially,
 //      but now sorted by < (in a stable manner).
 template <typename RAIter>
-void mergeSort(RAIter first, RAIter last)
+size_t mergeSort(RAIter first, RAIter last)
 {
     // Compute size of sequence
     size_t size = distance(first, last);
-
     // BASE CASE
-    if (size <= 1)
-        return;
-
-    // RECURSIVE CASE
-    RAIter middle = first;
-    advance(middle, size/2);  // middle is iterator to middle of range
-
+    if (size <= 1) return 0;
+    // Find iterator pointing to the middle of the array.
+    RAIter middle = first + ((last - first) / 2);
     // Recursively sort the two lists
-    mergeSort(first, middle);
-    mergeSort(middle, last);
-
+    size_t m = mergeSort(first, middle);
+    size_t n = mergeSort(middle, last);
     // And merge them
-    stableMerge(first, middle, last);
+    size_t total = stableMerge(first, middle, last) + m + n;
+    return total;
 }
 

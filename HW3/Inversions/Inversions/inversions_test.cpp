@@ -536,6 +536,16 @@ void test_inversions_small(Tester & t)
     t.test(inversions(v.begin(), v.end()) == ans,
         "Size 3, 3 inversions");
     }
+    
+    {
+    // Size 4, repeating
+    const int DATASIZE = 4;
+    int data[DATASIZE] = { 2, 2, 1, 1 };
+    std::vector<int> v(data, data+DATASIZE);
+    size_t ans = size_t(4);            // Correct result
+    t.test(inversions(v.begin(), v.end()) == ans,
+        "Size 3, repeating");
+    }
 }
 
 

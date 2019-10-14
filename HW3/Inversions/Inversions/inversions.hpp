@@ -10,18 +10,11 @@
 #define inversions_h
 
 #include "merge_sort.cpp"
-#include <iterator>
-using std::distance;
-#include <algorithm>
-
-
 template<typename RAIter>
 size_t inversions(RAIter first, RAIter last){
-    size_t size = distance(first, last-1);
-    
-    return size;
-    
-    
+    if(first == last) // If iterators are equal in the beginning, the array is empty.
+        return 0;
+    return mergeSort(first, last);;
 }
 
 #endif /* inversions_h */
