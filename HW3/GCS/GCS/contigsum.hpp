@@ -9,9 +9,7 @@
 #ifndef contigsum_h
 #define contigsum_h
 #include <iterator>
-using std::distance;
 #include <algorithm>
-using std::max;
 
 //A. The GCS of the sequence.
 //B. The greatest possible sum of a contiguous subsequence
@@ -58,14 +56,14 @@ gcsValues recurse(RAIter first, RAIter last, size_t size){
     
     //recurse over both halves of the array
     RAIter mid = first + ((last - first)/2);
-    size = distance(first, mid)+1;
+    size = std::distance(first, mid)+1;
     val1 = recurse(first, mid, size);
-    size = distance(mid+1, last)+1;
+    size = std::distance(mid+1, last)+1;
     gcsValues val2 = recurse(mid+1, last, size);
     gcsValues val3 = {
                     maximum(val1.gcsOfSeq, val2.gcsOfSeq, val1.gcsWithLastVal + val2.gcsWithFirstVal),
-                    max(val1.gcsWithFirstVal, val1.sumOfSeq + val2.gcsWithFirstVal),
-                    max(val2.gcsWithLastVal, val2.sumOfSeq + val1.gcsWithLastVal),
+                    std::max(val1.gcsWithFirstVal, val1.sumOfSeq + val2.gcsWithFirstVal),
+                    std::max(val2.gcsWithLastVal, val2.sumOfSeq + val1.gcsWithLastVal),
                     val1.sumOfSeq + val2.sumOfSeq
                   };
     return val3;
@@ -76,7 +74,7 @@ int contigSum(RAIter first, RAIter last){
     int sum = 0;
     if(first == last) return sum;
 
-    size_t size = distance(first, last);
+    size_t size = std::distance(first, last);
     gcsValues v = recurse(first, last-1, size);
     sum = v.gcsOfSeq;
     return sum;
