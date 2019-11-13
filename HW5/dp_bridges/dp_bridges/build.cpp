@@ -21,26 +21,42 @@ int check_collisions(const vector<int> & b1, const vector<int> & b2){
 
     if((b1[0] < b2[0] && b1[1] > b2[1]) ||
        (b1[0] > b2[0] && b1[1] < b2[1])){
-        return 0;
-    }
-    else if((b1[0] == b2[0]) || (b1[1] == b2[1]))
+        cout << "bridges are crossing" << endl;
+//        return 0;
         return max(b1[2], b2[2]);
+    }
+    else if((b1[0] == b2[0]) || (b1[1] == b2[1])){
+        cout << "bridges have common city" << endl;
+        return max(b1[2], b2[2]);
+    }
     else
         return b1[2]+b2[2];
 }
 
 int recurseBridges(vector<Bridge> & bridges, vector<int> & memo, int n){
-    int toll = 0;
+    cout << "size: " << bridges.size() << endl;
+    cout << "n: " << n << endl;
+    int result = 0;
+    if(memo[n] != 0){
+        cout << "in memo if statement" << endl;
+        return memo[n];
+    }
+    
     if(n == bridges.size()){
-        return toll;
+        cout << "size == 0" << endl;
+        return 0;
     }
     else if(bridges.size() == 1){
-        toll = bridges[0][2];
+        cout << "size == 1" << endl;
+        return bridges[0][2];
     }
-    else
-        toll += check_collisions(bridges[n], bridges[n+1]);
-    cout << "toll: " << memo[n] << endl;
-    return toll;
+    else{
+        cout << "n: " << n << endl;
+        cout << "before check collisions" << endl;
+        result = check_collisions(bridges[n], bridges[n+1]);
+//        result = recurseBridges(bridges, memo, n+1);
+    }
+    return result;
 }
 
 int memoBridges(vector<Bridge> & bridges){
