@@ -10,7 +10,6 @@
 #define build_hpp
 
 #include <vector>
-#include <algorithm>
 
 using Bridge = std::vector<int>;
 int build(int w, int e, const std::vector<Bridge> & bridges);
