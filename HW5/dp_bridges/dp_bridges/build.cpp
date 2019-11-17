@@ -11,12 +11,6 @@ using std::vector;
 using std::sort;
 using std::max;
 
-bool cmp(vector<int> & b1, vector<int> & b2){
-    if(b1[0] == b2[0])
-        return b1[1] < b2[1];
-    return b1[0] < b2[0];
-}
-
 int recBridges(vector<Bridge> & bridges, int w, int e, vector<vector<int>> & table){
     int toll = 0;
     if(table[w][e] != -1)
@@ -37,6 +31,8 @@ int build(int w, int e, const vector<Bridge> & bridges){
     else if(bridges.size() == 1)
         return bridges[0][2];
     auto copyOfBridges = bridges;
-    sort(copyOfBridges.begin(), copyOfBridges.end(), cmp);
+
+    sort(copyOfBridges.begin(), copyOfBridges.end());
+
     return recBridges(copyOfBridges, w, e, table);
 }

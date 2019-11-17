@@ -23,7 +23,6 @@
 // Additional includes for this test program
 #include <vector>       // for std::vector
 
-
 // ************************************************************************
 // Testing Package:
 //     Class Tester - For Tracking Tests
@@ -1126,7 +1125,6 @@ int main()
 {
     Tester t;
     test_build(t);
-
     std::cout << std::endl;
     if (t.allPassed())
     {
