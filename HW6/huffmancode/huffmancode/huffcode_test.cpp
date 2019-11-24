@@ -447,19 +447,24 @@ bool matchPattern(const std::string & pattern,
     for (size_t i = 0; i != len; ++i)
     {
         char tc = coded[i];
+//        std::cout << "tc: " << tc << std::endl;
         if (tc != '0' && tc != '1')
             return false;
+            
 
         char pc = pattern[i];
+//        std::cout << "pc: " << pc << std::endl;
         bool islower =  (pc >= 'a');
         char pcupper = islower ? char(pc - 'a' + 'A') : pc;
-
+//        std::cout << "pcupper: " << pcupper << std::endl;
         char tcbase = islower ? char('1'-(tc-'0')) : tc;
-
+//        std::cout << "tcbase: " << tcbase << std::endl;
         if (m.find(pcupper) != m.end())
         {
-            if (tcbase != m[pcupper])
+            if (tcbase != m[pcupper]){
+//                std::cout << "here" << std::endl;
                 return false;
+            }
         }
         else
         {

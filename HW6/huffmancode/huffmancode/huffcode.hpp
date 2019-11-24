@@ -31,9 +31,11 @@ public:
     void setWeights(const std::unordered_map<char, int> & theweights);
 
     std::string encode(const std::string & text) const;
-
+    
     std::string decode(const std::string & codestr) const;
-
+    
+    std::string recurseDecode(std::string & codestr, std::string::iterator & first, std::string::iterator & last) const;
+    int weights = 0;
 // ***** HuffCode: data members *****
 private:
 
