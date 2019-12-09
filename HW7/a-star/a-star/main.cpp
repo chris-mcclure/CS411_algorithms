@@ -1,8 +1,8 @@
 //
 //  main.cpp
-//  bin_heap
+//  a-star
 //
-//  Created by Chris McClure on 11/28/19.
+//  Created by Chris McClure on 12/8/19.
 //  Copyright © 2019 Chris McClure. All rights reserved.
 //
 
